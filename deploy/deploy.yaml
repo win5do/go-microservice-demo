@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-microservice-demo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: go-microservice-demo
+  template:
+    metadata:
+      labels:
+        app: go-microservice-demo
+    spec:
+      containers:
+        - name: server
+          image: registry.cn-huhehaote.aliyuncs.com/feng-566/go-microservice-demo:v1.0.0
+          args:
+            - --debug
+            - --db-dsn=root:123456@(127.0.0.1:3306)/go-demo
+          ports:
+            - containerPort: 9010
+            - containerPort: 9020
+            - containerPort: 9030

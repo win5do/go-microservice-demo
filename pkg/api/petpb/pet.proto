@@ -1,0 +1,123 @@
+syntax = "proto3";
+
+package pet.service.v1;
+option go_package = ".;petpb";
+
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service PetService {
+  rpc ListPet (google.protobuf.Empty) returns (PetList) {
+    option (google.api.http) = {
+      get: "/v1/pets"
+    };
+  }
+
+  rpc GetPet (Id) returns (Pet) {
+    option (google.api.http) = {
+      get: "/v1/pets/{id}"
+    };
+  }
+
+  rpc CreatePet (Pet) returns (Pet) {
+    option (google.api.http) = {
+      post: "/v1/pets"
+    };
+  }
+
+  rpc UpdatePet (Pet) returns (Pet) {
+    option (google.api.http) = {
+      put: "/v1/pets/{id}"
+    };
+  }
+
+  rpc DeletePet (Id) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/pets/{id}"
+    };
+  }
+
+  rpc ListOwner (google.protobuf.Empty) returns (OwnerList) {
+    option (google.api.http) = {
+      get: "/v1/owners"
+    };
+  }
+
+  rpc GetOwner (Id) returns (Owner) {
+    option (google.api.http) = {
+      get: "/v1/owners/{id}"
+    };
+  }
+
+  rpc CreateOwner (Owner) returns (Owner) {
+    option (google.api.http) = {
+      post: "/v1/owners"
+    };
+  }
+
+  rpc UpdateOwner (Owner) returns (Owner) {
+    option (google.api.http) = {
+      put: "/v1/owners/{id}"
+    };
+  }
+
+  rpc DeleteOwner (Id) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/owners/{id}"
+    };
+  }
+
+  rpc OwnPet (Owner_Pet) returns (Owner_Pet) {
+    option (google.api.http) = {
+      post: "/v1/owners-pets"
+    };
+  }
+
+  rpc AbandonPet (Owner_Pet) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      delete: "/v1/owners-pets"
+    };
+  }
+}
+
+message Id {
+  string id = 1;
+}
+
+message PetList {
+  repeated Pet items = 1;
+}
+
+message Pet {
+  string id = 1;
+  google.protobuf.Timestamp createdAt = 2;
+  google.protobuf.Timestamp updatedAt = 3;
+  string name = 4;
+  string type = 5;
+  string  sex = 6;
+  uint32 age = 7;
+  bool owned = 8;
+}
+
+message OwnerList {
+  repeated Owner items = 1;
+}
+
+message Owner {
+  string id = 1;
+  google.protobuf.Timestamp createdAt = 2;
+  google.protobuf.Timestamp updatedAt = 3;
+  string name = 4;
+  string  sex = 5;
+  uint32 age = 6;
+  string phone = 7;
+}
+
+message Owner_Pet {
+  string id = 1;
+  google.protobuf.Timestamp createdAt = 2;
+  google.protobuf.Timestamp updatedAt = 3;
+  string ownerId = 4;
+  string petId = 5;
+}
