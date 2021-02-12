@@ -4,7 +4,7 @@ import (
 	"context"
 	"net"
 
-	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
 	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
@@ -12,7 +12,7 @@ import (
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	"github.com/win5do/golang-microservice-demo/pkg/api/petpb"
 	"github.com/win5do/golang-microservice-demo/pkg/config/util"
@@ -35,13 +35,13 @@ func Run(ctx context.Context, cfg *config.Config) {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	logrusEntry := log.NewEntry(log.New())
-	grpc_logrus.ReplaceGrpcLogger(logrusEntry)
+	logger := log.GetLogger()
+	grpc_zap.ReplaceGrpcLogger(logger)
 	s := grpc.NewServer(
 		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
 			grpc_opentracing.UnaryServerInterceptor(),
 			grpc_prometheus.UnaryServerInterceptor,
-			grpc_logrus.UnaryServerInterceptor(logrusEntry),
+			grpc_zap.UnaryServerInterceptor(logger),
 			grpc_recovery.UnaryServerInterceptor(),
 		)),
 	)

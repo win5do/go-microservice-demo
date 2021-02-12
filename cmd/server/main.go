@@ -13,7 +13,7 @@ import (
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbinit"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	grpcserver "github.com/win5do/golang-microservice-demo/pkg/server/grpc"
 	httpserver "github.com/win5do/golang-microservice-demo/pkg/server/http"
@@ -57,7 +57,7 @@ func Run(cfg *config.Config) {
 	ctx := cfg.Ctx
 	defer func() {
 		cfg.Cancel()
-		log.Debugf("cancel ctx")
+		log.Debug("cancel ctx")
 		util.GetWaitGroupInCtx(ctx).Wait() // wait for goroutine cancel
 	}()
 

@@ -7,12 +7,13 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	jaegercfg "github.com/uber/jaeger-client-go/config"
+	jaegerzap "github.com/uber/jaeger-client-go/log/zap"
 	"github.com/uber/jaeger-lib/metrics"
 
 	"github.com/win5do/golang-microservice-demo/pkg/config/util"
 	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 )
 
 func SetupTrace(ctx context.Context, cfg *Config) error {
@@ -49,7 +50,7 @@ func SetupTrace(ctx context.Context, cfg *Config) error {
 	// Initialize tracer with a logger and a metrics factory
 	closer, err := jaegerCfg.InitGlobalTracer(
 		cfg.AppName,
-		jaegercfg.Logger(NewTraceLogger(log.StandardLogger())),
+		jaegercfg.Logger(jaegerzap.NewLogger(log.GetLogger())),
 		jaegercfg.Metrics(jMetricsFactory),
 	)
 	if err != nil {
@@ -72,18 +73,4 @@ func SetupTrace(ctx context.Context, cfg *Config) error {
 	}()
 
 	return nil
-}
-
-type traceLogger struct {
-	*log.Logger
-}
-
-func (s *traceLogger) Error(msg string) {
-	s.Logger.Error(msg)
-}
-
-func NewTraceLogger(logger *log.Logger) *traceLogger {
-	return &traceLogger{
-		logger,
-	}
 }

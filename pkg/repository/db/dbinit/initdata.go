@@ -1,7 +1,7 @@
 package dbinit
 
 import (
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"

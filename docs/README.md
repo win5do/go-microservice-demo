@@ -22,5 +22,5 @@
 - 高可用、横向扩展
 - [Error with stackTrace](./sections/error-handle.md)
 - Context
-- [Unit test / Integrate test](./sections/go-test.md)
+- [Unit test / Integration test](./sections/go-test.md)
 - [Deploy with Docker / Kubernetes](./sections/deploy.md)

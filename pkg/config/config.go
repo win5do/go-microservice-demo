@@ -4,8 +4,10 @@ import (
 	"context"
 
 	"github.com/opentracing/opentracing-go"
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
+	"go.uber.org/zap/zapcore"
+
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
@@ -63,14 +65,19 @@ func SetFlags(flagSet *pflag.FlagSet, cfg *Config) {
 }
 
 func InitConfig(cfg *Config) error {
+	var level zapcore.Level
 	if cfg.Debug {
-		log.SetLevel(log.DebugLevel)
-		log.SetReportCaller(true)
+		level = zapcore.DebugLevel
 		cfg.DBConfig.Debug = true
+	} else {
+		level = zapcore.InfoLevel
 	}
 
+	log.SetLogger(log.NewLogger(level))
+
 	// jaeger
-	if err := SetupTrace(cfg.Ctx, cfg); err != nil {
+	err := SetupTrace(cfg.Ctx, cfg)
+	if err != nil {
 		return errx.WithStackOnce(err)
 	}
 

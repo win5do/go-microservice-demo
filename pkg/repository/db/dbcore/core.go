@@ -11,10 +11,11 @@ import (
 	"gorm.io/gorm/schema"
 
 	"github.com/oklog/ulid/v2"
-	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
 )

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 )
 
 // https://github.com/gin-gonic/gin/issues/961#issuecomment-557931409

@@ -3,7 +3,7 @@ package db_test
 import (
 	"testing"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	"github.com/win5do/golang-microservice-demo/pkg/config/util"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"

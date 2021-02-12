@@ -8,7 +8,8 @@ import (
 	"time"
 
 	"github.com/opentracing-contrib/go-gin/ginhttp"
-	log "github.com/sirupsen/logrus"
+
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
@@ -56,7 +57,7 @@ func Run(ctx context.Context, cfg *config.Config) {
 
 	<-ctx.Done()
 
-	ctx, _ = context.WithTimeout(ctx, 3*time.Second)
+	ctx, _ = context.WithTimeout(context.Background(), 3*time.Second)
 	if err := server.Shutdown(ctx); err != nil {
 		log.Errorf("server shutdown err: %+v", err)
 		return

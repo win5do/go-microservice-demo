@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/sirupsen/logrus"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 	"gorm.io/gorm"
 
 	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
