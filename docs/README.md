@@ -15,7 +15,8 @@
 
 ## Design
 
-- 文档生成
+- [文档生成](./sections/grpc-gateway.md#生成文档)
+- [代码生成](./sections/go-ast.md)
 - [简化的 DDD 架构](./sections/ddd-lite.md)
 - [DB 分布式锁](./sections/db-lock.md)
 - Repository pattern

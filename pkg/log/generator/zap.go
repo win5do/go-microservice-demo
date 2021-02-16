@@ -61,10 +61,15 @@ func getImportPkg(pkg string) (string, error) {
 }
 
 func parseDir(dir, pkgName string) (*ast.Package, error) {
-	pkgMap, err := goparser.ParseDir(token.NewFileSet(), dir, func(info os.FileInfo) bool {
-		// skip go-test
-		return !strings.Contains(info.Name(), "_test.go")
-	}, goparser.Mode(0))
+	pkgMap, err := goparser.ParseDir(
+		token.NewFileSet(),
+		dir,
+		func(info os.FileInfo) bool {
+			// skip go-test
+			return !strings.Contains(info.Name(), "_test.go")
+		},
+		goparser.Mode(0), // no comment
+	)
 	if err != nil {
 		return nil, errx.WithStackOnce(err)
 	}
