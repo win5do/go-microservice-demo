@@ -1,15 +1,22 @@
 .PHONY: run
 
-run:
+run-server:
 	go run ./cmd/server --debug
 
+run-client:
+	go run ./cmd/client --service localhost:9020
 
-IMG := registry.cn-huhehaote.aliyuncs.com/feng-566/go-microservice-demo:v1.0.0
+IMG_SERVER := registry.cn-huhehaote.aliyuncs.com/feng-566/grpc-server:v1.0.0
+IMG_CLIENT := registry.cn-huhehaote.aliyuncs.com/feng-566/grpc-client:v1.0.0
 
-build:
-	docker build -t $(IMG) .
 
-push:
-	docker push $(IMG)
+build-server:
+	docker build -t $(IMG_SERVER) . &&\
+	docker push $(IMG_SERVER)
 
-image: build push
+
+build-client:
+	docker build -f client.Dockerfile -t $(IMG_CLIENT) . &&\
+	docker push $(IMG_CLIENT)
+
+image: build-server build-client

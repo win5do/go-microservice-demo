@@ -8,6 +8,12 @@ import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
 service PetService {
+  rpc Ping (Id) returns (Id) {
+    option (google.api.http) = {
+      get: "/ping"
+    };
+  }
+
   rpc ListPet (google.protobuf.Empty) returns (PetList) {
     option (google.api.http) = {
       get: "/v1/pets"

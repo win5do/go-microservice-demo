@@ -7,6 +7,7 @@ import (
 
 	"github.com/win5do/golang-microservice-demo/pkg/api/errcode"
 	"github.com/win5do/golang-microservice-demo/pkg/api/petpb"
+	"github.com/win5do/golang-microservice-demo/pkg/log"
 	"github.com/win5do/golang-microservice-demo/pkg/model"
 	petmodel "github.com/win5do/golang-microservice-demo/pkg/model/pet"
 )
@@ -23,6 +24,11 @@ func NewPetService(txImpl model.TransactionInterface, petDomain petmodel.PetDoma
 		txImpl:    txImpl,
 		petDomain: petDomain,
 	}
+}
+
+func (s *PetService) Ping(ctx context.Context, in *petpb.Id) (*petpb.Id, error) {
+	log.Debugf("echo: %s", in.Id)
+	return in, nil
 }
 
 func (s *PetService) ListPet(ctx context.Context, in *emptypb.Empty) (*petpb.PetList, error) {

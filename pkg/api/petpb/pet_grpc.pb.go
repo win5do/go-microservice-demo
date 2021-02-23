@@ -18,6 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PetServiceClient interface {
+	Ping(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Id, error)
 	ListPet(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PetList, error)
 	GetPet(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Pet, error)
 	CreatePet(ctx context.Context, in *Pet, opts ...grpc.CallOption) (*Pet, error)
@@ -38,6 +39,15 @@ type petServiceClient struct {
 
 func NewPetServiceClient(cc grpc.ClientConnInterface) PetServiceClient {
 	return &petServiceClient{cc}
+}
+
+func (c *petServiceClient) Ping(ctx context.Context, in *Id, opts ...grpc.CallOption) (*Id, error) {
+	out := new(Id)
+	err := c.cc.Invoke(ctx, "/pet.service.v1.PetService/Ping", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *petServiceClient) ListPet(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*PetList, error) {
@@ -152,6 +162,7 @@ func (c *petServiceClient) AbandonPet(ctx context.Context, in *Owner_Pet, opts .
 // All implementations must embed UnimplementedPetServiceServer
 // for forward compatibility
 type PetServiceServer interface {
+	Ping(context.Context, *Id) (*Id, error)
 	ListPet(context.Context, *emptypb.Empty) (*PetList, error)
 	GetPet(context.Context, *Id) (*Pet, error)
 	CreatePet(context.Context, *Pet) (*Pet, error)
@@ -171,6 +182,9 @@ type PetServiceServer interface {
 type UnimplementedPetServiceServer struct {
 }
 
+func (UnimplementedPetServiceServer) Ping(context.Context, *Id) (*Id, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
+}
 func (UnimplementedPetServiceServer) ListPet(context.Context, *emptypb.Empty) (*PetList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPet not implemented")
 }
@@ -218,6 +232,24 @@ type UnsafePetServiceServer interface {
 
 func RegisterPetServiceServer(s grpc.ServiceRegistrar, srv PetServiceServer) {
 	s.RegisterService(&_PetService_serviceDesc, srv)
+}
+
+func _PetService_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Id)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PetServiceServer).Ping(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pet.service.v1.PetService/Ping",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PetServiceServer).Ping(ctx, req.(*Id))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PetService_ListPet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -440,6 +472,10 @@ var _PetService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pet.service.v1.PetService",
 	HandlerType: (*PetServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Ping",
+			Handler:    _PetService_Ping_Handler,
+		},
 		{
 			MethodName: "ListPet",
 			Handler:    _PetService_ListPet_Handler,

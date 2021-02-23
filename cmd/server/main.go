@@ -39,9 +39,8 @@ func main() {
 			}
 			return nil
 		},
-		RunE: func(cmd *cobra.Command, args []string) error {
+		Run: func(cmd *cobra.Command, args []string) {
 			Run(cfg)
-			return nil
 		},
 	}
 
@@ -49,7 +48,7 @@ func main() {
 	rootCmd.Flags().AddGoFlagSet(goflag.CommandLine)
 
 	if err := rootCmd.Execute(); err != nil {
-		log.Fatal(err)
+		log.Fatalf("err: %+v", err)
 	}
 }
 

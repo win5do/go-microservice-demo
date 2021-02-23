@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-client
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: grpc-client
+  template:
+    metadata:
+      labels:
+        app: grpc-client
+    spec:
+      containers:
+        - name: client
+          imagePullPolicy: Always
+          image: registry.cn-huhehaote.aliyuncs.com/feng-566/grpc-client:v1.0.0
+          args:
+            - --service=grpc-server-headless:9020
