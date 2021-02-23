@@ -18,7 +18,7 @@
 - [文档生成](./sections/grpc-gateway.md#生成文档)
 - [代码生成](./sections/go-ast.md)
 - [简化的 DDD 架构](./sections/ddd-lite.md)
-- [DB 分布式锁](./sections/db-lock.md)
+- [DB 简易分布式锁](./sections/db-lock.md)
 - Repository pattern
 - 高可用、横向扩展
 - [Error with stackTrace](./sections/error-handle.md)
