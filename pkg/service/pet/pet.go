@@ -2,6 +2,8 @@ package pet
 
 import (
 	"context"
+	"fmt"
+	"os"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 
@@ -27,8 +29,14 @@ func NewPetService(txImpl model.TransactionInterface, petDomain petmodel.PetDoma
 }
 
 func (s *PetService) Ping(ctx context.Context, in *petpb.Id) (*petpb.Id, error) {
-	log.Debugf("echo: %s", in.Id)
-	return in, nil
+	log.Debugf("req: %s", in.Id)
+	host, err := os.Hostname()
+	if err != nil {
+		return nil, err
+	}
+	return &petpb.Id{
+		Id: fmt.Sprintf("%s, %s", in.Id, host),
+	}, nil
 }
 
 func (s *PetService) ListPet(ctx context.Context, in *emptypb.Empty) (*petpb.PetList, error) {
