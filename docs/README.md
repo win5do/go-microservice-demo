@@ -17,11 +17,11 @@
 
 - [文档生成](./sections/grpc-gateway.md#生成文档)
 - [代码生成](./sections/go-ast.md)
-- [简化的 DDD 架构](./sections/ddd-lite.md)
+- [简化的 DDD 架构 / Repository pattern](./sections/ddd-lite.md)
 - [DB 简易分布式锁](./sections/db-lock.md)
-- Repository pattern
 - 高可用、横向扩展
 - [Error with stackTrace](./sections/error-handle.md)
-- Context
+- Context / Tracing
 - [Unit test / Integration test](./sections/go-test.md)
 - [Deploy with Docker / Kubernetes](./sections/deploy.md)
+- [k8s 服务发现 以及 gRPC 长连接负载均衡](./sections/grpc-lb.md)
