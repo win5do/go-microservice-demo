@@ -1,7 +1,9 @@
 package log
 
 import (
-	"sync"
+	"log"
+	"sync/atomic"
+	"unsafe"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -16,22 +18,19 @@ type (
 )
 
 var (
-	_globalMu sync.RWMutex
-	_globalL  = zap.NewNop()
-	_globalS  = _globalL.Sugar()
+	_globalL = zap.NewNop()
+	_globalS = _globalL.Sugar()
 )
 
 func SetLogger(l *Logger) {
-	_globalMu.Lock()
-	_globalL = l
-	_globalS = _globalL.Sugar()
-	_globalMu.Unlock()
+	lPtr := (*unsafe.Pointer)(unsafe.Pointer(&_globalL))
+	atomic.StorePointer(lPtr, unsafe.Pointer(l))
+	sPtr := (*unsafe.Pointer)(unsafe.Pointer(&_globalS))
+	atomic.StorePointer(sPtr, unsafe.Pointer(l.Sugar()))
 }
 
 func GetLogger() *Logger {
-	_globalMu.RLock()
 	l := _globalL
-	_globalMu.RUnlock()
 	return l
 }
 
@@ -51,7 +50,7 @@ func NewLogger(lv zapcore.Level) *Logger {
 		zap.AddCallerSkip(1), // AddCallerSkip because we made a layer of wrapper
 	)
 	if err != nil {
-		Panic(err)
+		log.Panic(err)
 	}
 
 	return logger
