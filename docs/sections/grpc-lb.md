@@ -8,9 +8,11 @@ k8s 自带一套基于 DNS 的服务发现机制 —— Service。
 
 ## 错误姿势 ClusterIP Service
 
-gRPC client 直接使用 ClusterIP Service 会导致负载不均衡。因为 HTTP/2 多个请求可以复用一条连接，并发达到最大值才会创建新的连接。这个最大值由 MaxConcurrentStreams 控制，Golang client 默认是100。
+gRPC client 直接使用 ClusterIP Service 会导致负载不均衡。因为 HTTP/2 多个请求在一个 TCP 连接上多路复用。
 
-除非运气比较好，例如并发数是 (200, 300]，正好与三个不同 pod 建立了三条长连接。所以使用 ClusterIP Service 不太靠谱。
+即使这个连接上的 stream 达到 maxConcurrentStreams，也不会创建新的连接，而是阻塞。除非搭配自定义 gRPC 连接池使用。
+
+参见源码：grpc-go/internal/transport/http2_client.go:L107
 
 ### 为什么 HTTP/1.1 不受影响
 
