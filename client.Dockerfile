@@ -1,7 +1,7 @@
 FROM golang:1.15-alpine AS builder
+WORKDIR /go/src/app
 ENV GO111MODULE=on \
 	GOPROXY=https://goproxy.cn
-WORKDIR /go/src/app
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64  go build -o main ./cmd/client
 
