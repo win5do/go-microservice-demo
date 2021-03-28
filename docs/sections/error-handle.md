@@ -9,6 +9,7 @@ Golang 的 error 不会像 Java 那样打印 stackTrack 信息。回溯 err 非�
 注意，使用 `log.Errorf("%+v", err)` 才会打印 stackTrack，使用 `%v %s` 不行。
 
 但是如果多次使用 `WithStack(err)`，会将 stack 打印多遍，err 信息可能非常长。像这样：
+
 ```log
 err_test.go:35: err: normal error
     github.com/win5do/golang-microservice-demo/pkg/lib/errx.errMulti
@@ -63,10 +64,11 @@ func WithStackOnce(err error) error {
 	return errors2.WithStack(err)
 }
 ```
+
 有人可能要问 `StackTrace` 也是私有类型咋办？那就 fork 然后直接改源码吧。
 
-
 现在使用这个 wrap 函数打印出来的 stackTrace 就不会重复和冗长。像这样：
+
 ```log
 err_test.go:21: err: normal error
     github.com/win5do/golang-microservice-demo/pkg/lib/errx.WithStackOnce
@@ -81,4 +83,4 @@ err_test.go:21: err: normal error
         /usr/local/Cellar/go/1.15.5/libexec/src/runtime/asm_amd64.s:1374
 ```
 
-完整代码参考：https://github.com/win5do/go-microservice-demo/blob/main/pkg/lib/errx/err.go
+完整代码参考：https://github.com/win5do/go-lib/blob/edc6813f5414f1251e91b670c3a9b89ed89e3525/errx/err.go
