@@ -15,7 +15,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
+	"github.com/win5do/go-lib/errx"
 )
 
 func main() {

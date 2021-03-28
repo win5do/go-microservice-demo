@@ -3,7 +3,8 @@ package pet
 import (
 	"gorm.io/gorm"
 
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
+	"github.com/win5do/go-lib/errx"
+
 	petmodel "github.com/win5do/golang-microservice-demo/pkg/model/pet"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
 )

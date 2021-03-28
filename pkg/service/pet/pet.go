@@ -7,9 +7,10 @@ import (
 
 	"google.golang.org/protobuf/types/known/emptypb"
 
+	log "github.com/win5do/go-lib/logx"
+
 	"github.com/win5do/golang-microservice-demo/pkg/api/errcode"
 	"github.com/win5do/golang-microservice-demo/pkg/api/petpb"
-	"github.com/win5do/golang-microservice-demo/pkg/log"
 	"github.com/win5do/golang-microservice-demo/pkg/model"
 	petmodel "github.com/win5do/golang-microservice-demo/pkg/model/pet"
 )

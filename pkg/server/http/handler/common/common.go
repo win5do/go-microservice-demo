@@ -9,7 +9,7 @@ import (
 	"github.com/jinzhu/gorm"
 	errors2 "github.com/pkg/errors"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
 	errcode2 "github.com/win5do/golang-microservice-demo/pkg/api/errcode"
 	"github.com/win5do/golang-microservice-demo/pkg/config"

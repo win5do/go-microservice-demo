@@ -3,7 +3,8 @@ package db_test
 import (
 	"testing"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
+	"go.uber.org/zap/zapcore"
 
 	"github.com/win5do/golang-microservice-demo/pkg/config/util"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
@@ -17,7 +18,7 @@ func TestMain(m *testing.M) {
 	dbcore.Connect(&dbcore.DBConfig{
 		DSN: util.GetEnvOrDefault("DB_DSN", "root:123456@(127.0.0.1:3306)/go-demo"),
 	})
-	log.SetLevel(log.DebugLevel)
+	log.SetLogger(log.NewLogger(zapcore.DebugLevel))
 	m.Run()
 }
 

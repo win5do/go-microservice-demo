@@ -19,9 +19,10 @@ require (
 	github.com/prometheus/common v0.6.0
 	github.com/spf13/cobra v1.1.1
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.7.0
 	github.com/uber/jaeger-client-go v2.25.0+incompatible
 	github.com/uber/jaeger-lib v2.4.0+incompatible
+	github.com/win5do/go-lib v0.0.0-20210322065409-edc6813f5414
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.16.0
 	google.golang.org/genproto v0.0.0-20201019141844-1ed22bb0c154

@@ -10,10 +10,11 @@ import (
 	jaegerzap "github.com/uber/jaeger-client-go/log/zap"
 	"github.com/uber/jaeger-lib/metrics"
 
-	"github.com/win5do/golang-microservice-demo/pkg/config/util"
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
+	"github.com/win5do/go-lib/errx"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	"github.com/win5do/golang-microservice-demo/pkg/config/util"
+
+	log "github.com/win5do/go-lib/logx"
 )
 
 func SetupTrace(ctx context.Context, cfg *Config) error {

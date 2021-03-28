@@ -15,9 +15,9 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
+	"github.com/win5do/go-lib/errx"
 )
 
 var (

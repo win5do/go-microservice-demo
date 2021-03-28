@@ -9,7 +9,7 @@ import (
 
 	"github.com/opentracing-contrib/go-gin/ginhttp"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
@@ -26,11 +26,11 @@ func Run(ctx context.Context, cfg *config.Config) {
 		Handler: mux,
 	}
 
-	if cfg.Tls_cert != "" && cfg.Tls_key != "" {
+	if cfg.TlsCert != "" && cfg.TlsKey != "" {
 		// https
 		go func() {
 			log.Infof("https server start: %v", server.Addr)
-			cer, err := tls.LoadX509KeyPair(cfg.Tls_cert, cfg.Tls_key)
+			cer, err := tls.LoadX509KeyPair(cfg.TlsCert, cfg.TlsKey)
 			if err != nil {
 				log.Errorf("failed to load certificate and key: %v", err)
 				return
@@ -38,7 +38,7 @@ func Run(ctx context.Context, cfg *config.Config) {
 			tlsConfig := &tls.Config{Certificates: []tls.Certificate{cer}}
 			server.TLSConfig = tlsConfig
 
-			if err := server.ListenAndServeTLS(cfg.Tls_cert, cfg.Tls_key); err != nil && err != http.ErrServerClosed {
+			if err := server.ListenAndServeTLS(cfg.TlsCert, cfg.TlsKey); err != nil && err != http.ErrServerClosed {
 				log.Fatalf("err: %+v", err)
 			}
 		}()
@@ -57,7 +57,8 @@ func Run(ctx context.Context, cfg *config.Config) {
 
 	<-ctx.Done()
 
-	ctx, _ = context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
 		log.Errorf("server shutdown err: %+v", err)
 		return

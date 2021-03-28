@@ -7,9 +7,10 @@ import (
 	"github.com/spf13/pflag"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
+	"github.com/win5do/go-lib/errx"
+
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
 
 	"github.com/win5do/golang-microservice-demo/pkg/config/util"
@@ -24,8 +25,8 @@ type Config struct {
 	GrpcPort        string
 
 	// https
-	Tls_cert string
-	Tls_key  string
+	TlsCert string
+	TlsKey  string
 
 	Debug bool // debug log
 
@@ -59,8 +60,8 @@ func SetFlags(flagSet *pflag.FlagSet, cfg *Config) {
 	flagSet.StringVar(&cfg.HttpPort, "http-port", "9010", "")
 	flagSet.StringVar(&cfg.GrpcPort, "grpc-port", "9020", "")
 	flagSet.StringVar(&cfg.GrpcGatewayPort, "grpc-gateway-port", "9030", "")
-	flagSet.StringVar(&cfg.Tls_cert, "tls-cert", "", "")
-	flagSet.StringVar(&cfg.Tls_key, "tls-key", "", "")
+	flagSet.StringVar(&cfg.TlsCert, "tls-cert", "", "")
+	flagSet.StringVar(&cfg.TlsKey, "tls-key", "", "")
 	flagSet.StringVar(&cfg.DSN, "db-dsn", "root:123456@(127.0.0.1:3306)/go-demo", "")
 }
 

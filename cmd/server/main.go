@@ -13,7 +13,7 @@ import (
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbinit"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
 	grpcserver "github.com/win5do/golang-microservice-demo/pkg/server/grpc"
 	httpserver "github.com/win5do/golang-microservice-demo/pkg/server/http"

@@ -12,7 +12,7 @@ import (
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
 	"github.com/win5do/golang-microservice-demo/pkg/api/petpb"
 	"github.com/win5do/golang-microservice-demo/pkg/config/util"

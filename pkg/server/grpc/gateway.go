@@ -9,7 +9,7 @@ import (
 
 	gw "github.com/win5do/golang-microservice-demo/pkg/api/petpb"
 
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 )
 
 func runGateway(gatewayAddr, grpcAddr string) error {

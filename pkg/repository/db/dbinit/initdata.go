@@ -1,9 +1,10 @@
 package dbinit
 
 import (
-	"github.com/win5do/golang-microservice-demo/pkg/log"
+	log "github.com/win5do/go-lib/logx"
 
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
+	"github.com/win5do/go-lib/errx"
+
 	"github.com/win5do/golang-microservice-demo/pkg/repository/db/dbcore"
 )
 

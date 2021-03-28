@@ -11,9 +11,10 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/balancer/roundrobin"
 
+	"github.com/win5do/go-lib/errx"
+	log "github.com/win5do/go-lib/logx"
+
 	"github.com/win5do/golang-microservice-demo/pkg/api/petpb"
-	"github.com/win5do/golang-microservice-demo/pkg/lib/errx"
-	"github.com/win5do/golang-microservice-demo/pkg/log"
 )
 
 func main() {
