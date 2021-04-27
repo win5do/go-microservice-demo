@@ -29,8 +29,8 @@ type PetServiceClient interface {
 	CreateOwner(ctx context.Context, in *Owner, opts ...grpc.CallOption) (*Owner, error)
 	UpdateOwner(ctx context.Context, in *Owner, opts ...grpc.CallOption) (*Owner, error)
 	DeleteOwner(ctx context.Context, in *Id, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	OwnPet(ctx context.Context, in *Owner_Pet, opts ...grpc.CallOption) (*Owner_Pet, error)
-	AbandonPet(ctx context.Context, in *Owner_Pet, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	OwnPet(ctx context.Context, in *OwnerPet, opts ...grpc.CallOption) (*OwnerPet, error)
+	AbandonPet(ctx context.Context, in *OwnerPet, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type petServiceClient struct {
@@ -140,8 +140,8 @@ func (c *petServiceClient) DeleteOwner(ctx context.Context, in *Id, opts ...grpc
 	return out, nil
 }
 
-func (c *petServiceClient) OwnPet(ctx context.Context, in *Owner_Pet, opts ...grpc.CallOption) (*Owner_Pet, error) {
-	out := new(Owner_Pet)
+func (c *petServiceClient) OwnPet(ctx context.Context, in *OwnerPet, opts ...grpc.CallOption) (*OwnerPet, error) {
+	out := new(OwnerPet)
 	err := c.cc.Invoke(ctx, "/pet.service.v1.PetService/OwnPet", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -149,7 +149,7 @@ func (c *petServiceClient) OwnPet(ctx context.Context, in *Owner_Pet, opts ...gr
 	return out, nil
 }
 
-func (c *petServiceClient) AbandonPet(ctx context.Context, in *Owner_Pet, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *petServiceClient) AbandonPet(ctx context.Context, in *OwnerPet, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/pet.service.v1.PetService/AbandonPet", in, out, opts...)
 	if err != nil {
@@ -173,8 +173,8 @@ type PetServiceServer interface {
 	CreateOwner(context.Context, *Owner) (*Owner, error)
 	UpdateOwner(context.Context, *Owner) (*Owner, error)
 	DeleteOwner(context.Context, *Id) (*emptypb.Empty, error)
-	OwnPet(context.Context, *Owner_Pet) (*Owner_Pet, error)
-	AbandonPet(context.Context, *Owner_Pet) (*emptypb.Empty, error)
+	OwnPet(context.Context, *OwnerPet) (*OwnerPet, error)
+	AbandonPet(context.Context, *OwnerPet) (*emptypb.Empty, error)
 	mustEmbedUnimplementedPetServiceServer()
 }
 
@@ -215,10 +215,10 @@ func (UnimplementedPetServiceServer) UpdateOwner(context.Context, *Owner) (*Owne
 func (UnimplementedPetServiceServer) DeleteOwner(context.Context, *Id) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteOwner not implemented")
 }
-func (UnimplementedPetServiceServer) OwnPet(context.Context, *Owner_Pet) (*Owner_Pet, error) {
+func (UnimplementedPetServiceServer) OwnPet(context.Context, *OwnerPet) (*OwnerPet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OwnPet not implemented")
 }
-func (UnimplementedPetServiceServer) AbandonPet(context.Context, *Owner_Pet) (*emptypb.Empty, error) {
+func (UnimplementedPetServiceServer) AbandonPet(context.Context, *OwnerPet) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AbandonPet not implemented")
 }
 func (UnimplementedPetServiceServer) mustEmbedUnimplementedPetServiceServer() {}
@@ -433,7 +433,7 @@ func _PetService_DeleteOwner_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _PetService_OwnPet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Owner_Pet)
+	in := new(OwnerPet)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -445,13 +445,13 @@ func _PetService_OwnPet_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/pet.service.v1.PetService/OwnPet",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetServiceServer).OwnPet(ctx, req.(*Owner_Pet))
+		return srv.(PetServiceServer).OwnPet(ctx, req.(*OwnerPet))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PetService_AbandonPet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Owner_Pet)
+	in := new(OwnerPet)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -463,7 +463,7 @@ func _PetService_AbandonPet_Handler(srv interface{}, ctx context.Context, dec fu
 		FullMethod: "/pet.service.v1.PetService/AbandonPet",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetServiceServer).AbandonPet(ctx, req.(*Owner_Pet))
+		return srv.(PetServiceServer).AbandonPet(ctx, req.(*OwnerPet))
 	}
 	return interceptor(ctx, in, info, handler)
 }

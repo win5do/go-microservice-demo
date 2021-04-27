@@ -6,10 +6,10 @@ import (
 	"github.com/win5do/golang-microservice-demo/pkg/model"
 )
 
-type PetDomainInterface interface {
-	PetDb(ctx context.Context) PetDbInterface
-	OwnerDb(ctx context.Context) OwnerDbInterface
-	Owner_PetDb(ctx context.Context) Owner_PetDbInterface
+type IPetDomain interface {
+	PetDb(ctx context.Context) IPetDb
+	OwnerDb(ctx context.Context) IOwnerDb
+	OwnerPetDb(ctx context.Context) IOwnerPetDb
 }
 
 type Pet struct {
@@ -21,7 +21,7 @@ type Pet struct {
 	Owned bool
 }
 
-type PetDbInterface interface {
+type IPetDb interface {
 	Get(id string) (*Pet, error)
 	List(query *Pet, offset, limit int) ([]*Pet, error)
 	Create(query *Pet) (*Pet, error)
@@ -37,7 +37,7 @@ type Owner struct {
 	Phone string
 }
 
-type OwnerDbInterface interface {
+type IOwnerDb interface {
 	Get(id string) (*Owner, error)
 	List(query *Owner, offset, limit int) ([]*Owner, error)
 	Create(query *Owner) (*Owner, error)
@@ -45,14 +45,14 @@ type OwnerDbInterface interface {
 	Delete(query *Owner) error
 }
 
-type Owner_Pet struct {
+type OwnerPet struct {
 	model.Common
 	OwnerId string
 	PetId   string
 }
 
-type Owner_PetDbInterface interface {
-	Query(query *Owner_Pet) ([]*Owner_Pet, error)
-	Create(query *Owner_Pet) (*Owner_Pet, error)
-	Delete(query *Owner_Pet) error
+type IOwnerPetDb interface {
+	Query(query *OwnerPet) ([]*OwnerPet, error)
+	Create(query *OwnerPet) (*OwnerPet, error)
+	Delete(query *OwnerPet) error
 }

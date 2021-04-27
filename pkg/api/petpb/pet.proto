@@ -74,13 +74,13 @@ service PetService {
     };
   }
 
-  rpc OwnPet (Owner_Pet) returns (Owner_Pet) {
+  rpc OwnPet (OwnerPet) returns (OwnerPet) {
     option (google.api.http) = {
       post: "/v1/owners-pets"
     };
   }
 
-  rpc AbandonPet (Owner_Pet) returns (google.protobuf.Empty) {
+  rpc AbandonPet (OwnerPet) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/v1/owners-pets"
     };
@@ -120,7 +120,7 @@ message Owner {
   string phone = 7;
 }
 
-message Owner_Pet {
+message OwnerPet {
   string id = 1;
   google.protobuf.Timestamp createdAt = 2;
   google.protobuf.Timestamp updatedAt = 3;

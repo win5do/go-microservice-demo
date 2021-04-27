@@ -14,7 +14,7 @@ import (
 	"github.com/win5do/golang-microservice-demo/pkg/model/pet/mock_pet"
 )
 
-func mockPetSvc(petDomain petmodel.PetDomainInterface) *PetService {
+func mockPetSvc(petDomain petmodel.IPetDomain) *PetService {
 	return NewPetService(&model.NoopTransaction{}, petDomain)
 }
 

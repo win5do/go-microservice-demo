@@ -18,11 +18,11 @@ import (
 type PetService struct {
 	petpb.UnimplementedPetServiceServer
 
-	petDomain petmodel.PetDomainInterface
-	txImpl    model.TransactionInterface
+	petDomain petmodel.IPetDomain
+	txImpl    model.ITransaction
 }
 
-func NewPetService(txImpl model.TransactionInterface, petDomain petmodel.PetDomainInterface) *PetService {
+func NewPetService(txImpl model.ITransaction, petDomain petmodel.IPetDomain) *PetService {
 	return &PetService{
 		txImpl:    txImpl,
 		petDomain: petDomain,
@@ -131,7 +131,7 @@ func (s *PetService) UpdateOwner(ctx context.Context, in *petpb.Owner) (*petpb.O
 }
 
 func (s *PetService) DeleteOwner(ctx context.Context, in *petpb.Id) (*emptypb.Empty, error) {
-	rows, err := s.petDomain.Owner_PetDb(ctx).Query(&petmodel.Owner_Pet{
+	rows, err := s.petDomain.OwnerPetDb(ctx).Query(&petmodel.OwnerPet{
 		OwnerId: in.Id,
 	})
 	if err != nil {
@@ -154,11 +154,11 @@ func (s *PetService) DeleteOwner(ctx context.Context, in *petpb.Id) (*emptypb.Em
 	return &emptypb.Empty{}, nil
 }
 
-func (s *PetService) OwnPet(ctx context.Context, in *petpb.Owner_Pet) (*petpb.Owner_Pet, error) {
-	var r *petmodel.Owner_Pet
+func (s *PetService) OwnPet(ctx context.Context, in *petpb.OwnerPet) (*petpb.OwnerPet, error) {
+	var r *petmodel.OwnerPet
 
 	err := s.txImpl.Transaction(ctx, func(txctx context.Context) error {
-		ownerJoinPet, err := s.petDomain.Owner_PetDb(txctx).Create(&petmodel.Owner_Pet{
+		ownerJoinPet, err := s.petDomain.OwnerPetDb(txctx).Create(&petmodel.OwnerPet{
 			PetId:   in.PetId,
 			OwnerId: in.OwnerId,
 		})
@@ -184,7 +184,7 @@ func (s *PetService) OwnPet(ctx context.Context, in *petpb.Owner_Pet) (*petpb.Ow
 		return nil, err
 	}
 
-	return &petpb.Owner_Pet{
+	return &petpb.OwnerPet{
 		Id:        r.Id,
 		CreatedAt: time2Pb(r.CreatedAt),
 		UpdatedAt: time2Pb(r.UpdatedAt),
@@ -193,9 +193,9 @@ func (s *PetService) OwnPet(ctx context.Context, in *petpb.Owner_Pet) (*petpb.Ow
 	}, nil
 }
 
-func (s *PetService) AbandonPet(ctx context.Context, in *petpb.Owner_Pet) (*emptypb.Empty, error) {
+func (s *PetService) AbandonPet(ctx context.Context, in *petpb.OwnerPet) (*emptypb.Empty, error) {
 	err := s.txImpl.Transaction(ctx, func(txctx context.Context) error {
-		err := s.petDomain.Owner_PetDb(txctx).Delete(&petmodel.Owner_Pet{
+		err := s.petDomain.OwnerPetDb(txctx).Delete(&petmodel.OwnerPet{
 			PetId:   in.PetId,
 			OwnerId: in.OwnerId,
 		})

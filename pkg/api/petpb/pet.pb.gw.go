@@ -529,7 +529,7 @@ var (
 )
 
 func request_PetService_OwnPet_0(ctx context.Context, marshaler runtime.Marshaler, client PetServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Owner_Pet
+	var protoReq OwnerPet
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -545,7 +545,7 @@ func request_PetService_OwnPet_0(ctx context.Context, marshaler runtime.Marshale
 }
 
 func local_request_PetService_OwnPet_0(ctx context.Context, marshaler runtime.Marshaler, server PetServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Owner_Pet
+	var protoReq OwnerPet
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -565,7 +565,7 @@ var (
 )
 
 func request_PetService_AbandonPet_0(ctx context.Context, marshaler runtime.Marshaler, client PetServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Owner_Pet
+	var protoReq OwnerPet
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -581,7 +581,7 @@ func request_PetService_AbandonPet_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_PetService_AbandonPet_0(ctx context.Context, marshaler runtime.Marshaler, server PetServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Owner_Pet
+	var protoReq OwnerPet
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {

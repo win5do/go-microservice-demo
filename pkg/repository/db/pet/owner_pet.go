@@ -11,16 +11,16 @@ import (
 
 func init() {
 	dbcore.RegisterInjector(func(db *gorm.DB) {
-		dbcore.SetupTableModel(db, &petmodel.Owner_Pet{})
+		dbcore.SetupTableModel(db, &petmodel.OwnerPet{})
 	})
 }
 
-type owner_petDb struct {
+type ownerPetDb struct {
 	db *gorm.DB
 }
 
-func (s *owner_petDb) Query(in *petmodel.Owner_Pet) ([]*petmodel.Owner_Pet, error) {
-	var r []*petmodel.Owner_Pet
+func (s *ownerPetDb) Query(in *petmodel.OwnerPet) ([]*petmodel.OwnerPet, error) {
+	var r []*petmodel.OwnerPet
 	err := s.db.Where(in).Find(&r).Error
 	if err != nil {
 		return nil, errx.WithStackOnce(err)
@@ -29,7 +29,7 @@ func (s *owner_petDb) Query(in *petmodel.Owner_Pet) ([]*petmodel.Owner_Pet, erro
 	return r, nil
 }
 
-func (s *owner_petDb) Create(in *petmodel.Owner_Pet) (*petmodel.Owner_Pet, error) {
+func (s *ownerPetDb) Create(in *petmodel.OwnerPet) (*petmodel.OwnerPet, error) {
 	err := s.db.Create(in).Error
 	if err != nil {
 		return nil, errx.WithStackOnce(err)
@@ -38,8 +38,8 @@ func (s *owner_petDb) Create(in *petmodel.Owner_Pet) (*petmodel.Owner_Pet, error
 	return in, nil
 }
 
-func (s *owner_petDb) Delete(in *petmodel.Owner_Pet) error {
-	err := s.db.Where(in).Delete(&petmodel.Owner_Pet{}).Error
+func (s *ownerPetDb) Delete(in *petmodel.OwnerPet) error {
+	err := s.db.Where(in).Delete(&petmodel.OwnerPet{}).Error
 	if err != nil {
 		return errx.WithStackOnce(err)
 	}

@@ -79,10 +79,12 @@ google.golang.org/protobuf/cmd/protoc-gen-go \
 google.golang.org/grpc/cmd/protoc-gen-go-grpc
 ```
 
+- 引入 [annotations.proto](https://github.com/googleapis/googleapis/blob/master/google/api/annotations.proto) ，我这里将其放到 `${GOPATH}/proto/googleapis`，protoc 命令中通过 -I include。
+
 生成桩代码及 swagger 文档：
 ```sh
 protoc -I/usr/local/include -I. \
-		-I${GOPATH}/protobuf \
+		-I${GOPATH}/proto/googleapis \
 		--go_out . --go_opt paths=source_relative \
 		--go-grpc_out . --go-grpc_opt paths=source_relative \
 		--grpc-gateway_out . --grpc-gateway_opt paths=source_relative \

@@ -19,7 +19,7 @@ func (s *Common) GetId() string {
 	return s.Id
 }
 
-type TransactionInterface interface {
+type ITransaction interface {
 	Transaction(ctx context.Context, fc func(txctx context.Context) error) error
 }
 

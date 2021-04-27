@@ -144,7 +144,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1Owner_Pet"
+              "$ref": "#/definitions/v1OwnerPet"
             }
           },
           "default": {
@@ -453,7 +453,7 @@
         }
       }
     },
-    "v1Owner_Pet": {
+    "v1OwnerPet": {
       "type": "object",
       "properties": {
         "id": {

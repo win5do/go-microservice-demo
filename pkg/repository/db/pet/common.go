@@ -13,14 +13,14 @@ func NewPetDomain() *petDomain {
 	return &petDomain{}
 }
 
-func (*petDomain) PetDb(ctx context.Context) petmodel.PetDbInterface {
+func (*petDomain) PetDb(ctx context.Context) petmodel.IPetDb {
 	return &petDb{dbcore.GetDB(ctx)}
 }
 
-func (*petDomain) OwnerDb(ctx context.Context) petmodel.OwnerDbInterface {
+func (*petDomain) OwnerDb(ctx context.Context) petmodel.IOwnerDb {
 	return &ownerDb{dbcore.GetDB(ctx)}
 }
 
-func (*petDomain) Owner_PetDb(ctx context.Context) petmodel.Owner_PetDbInterface {
-	return &owner_petDb{dbcore.GetDB(ctx)}
+func (*petDomain) OwnerPetDb(ctx context.Context) petmodel.IOwnerPetDb {
+	return &ownerPetDb{dbcore.GetDB(ctx)}
 }

@@ -12,8 +12,8 @@ import (
 	petdb "github.com/win5do/golang-microservice-demo/pkg/repository/db/pet"
 )
 
-var PetDomain petmodel.PetDomainInterface = petdb.NewPetDomain()
-var TxImpl model.TransactionInterface = dbcore.NewTxImpl()
+var PetDomain petmodel.IPetDomain = petdb.NewPetDomain()
+var TxImpl model.ITransaction = dbcore.NewTxImpl()
 
 func TestCreatePet(t *testing.T) {
 	_, err := PetDomain.PetDb(context.Background()).Create(&petmodel.Pet{
@@ -54,7 +54,7 @@ func TestTransaction(t *testing.T) {
 
 		// return errors.New("rollback") // test
 
-		_, err = PetDomain.Owner_PetDb(txctx).Create(&petmodel.Owner_Pet{
+		_, err = PetDomain.OwnerPetDb(txctx).Create(&petmodel.OwnerPet{
 			OwnerId: owner.Id,
 			PetId:   "abc",
 		})

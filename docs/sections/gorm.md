@@ -190,7 +190,7 @@ err := Transaction(context.Background(), func(txctx context.Context) error {
         return err
     }
 
-    _, err = NewOwner_PetDb(txctx).Create(&petmodel.Owner_Pet{
+    _, err = NewOwnerPetDb(txctx).Create(&petmodel.OwnerPet{
         OwnerId: ownerId,
         PetId:   pet.Id,
     })
