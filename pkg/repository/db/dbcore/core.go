@@ -119,12 +119,12 @@ func NewTxImpl() *txImpl {
 	return &txImpl{}
 }
 
-func (*txImpl) Transaction(ctx context.Context, fc func(txctx context.Context) error) error {
+func (*txImpl) Transaction(ctx context.Context, fn func(txctx context.Context) error) error {
 	db := globalDB.WithContext(ctx)
 
 	return db.Transaction(func(tx *gorm.DB) error {
 		txctx := CtxWithTransaction(ctx, tx)
-		return fc(txctx)
+		return fn(txctx)
 	})
 }
 

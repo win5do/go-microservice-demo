@@ -20,11 +20,11 @@ func (s *Common) GetId() string {
 }
 
 type ITransaction interface {
-	Transaction(ctx context.Context, fc func(txctx context.Context) error) error
+	Transaction(ctx context.Context, fn func(txctx context.Context) error) error
 }
 
 type NoopTransaction struct{}
 
-func (*NoopTransaction) Transaction(ctx context.Context, fc func(txctx context.Context) error) error {
-	return fc(ctx)
+func (*NoopTransaction) Transaction(ctx context.Context, fn func(txctx context.Context) error) error {
+	return fn(ctx)
 }

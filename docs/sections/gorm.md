@@ -167,12 +167,12 @@ func GetDB(ctx context.Context) *gorm.DB {
 
 在事务上做一下 context 的封装：
 ```go
-func Transaction(ctx context.Context, fc func(txctx context.Context) error) error {
+func Transaction(ctx context.Context, fn func(txctx context.Context) error) error {
 	db := globalDB.WithContext(ctx)
 
 	return db.Transaction(func(tx *gorm.DB) error {
 		txctx := CtxWithTransaction(ctx, tx)
-		return fc(txctx)
+		return fn(txctx)
 	})
 }
 ```
