@@ -185,7 +185,7 @@ type CommonModel struct {
 
 func WithOffsetLimit(db *gorm.DB, offset, limit int) *gorm.DB {
 	if offset > 0 {
-		db = db.Limit(offset)
+		db = db.Offset(offset)
 	}
 
 	if limit > 0 {
