@@ -42,7 +42,7 @@ func run(addr string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	conn, err := grpc.DialContext(ctx, "dns:///"+addr,
 		grpc.WithInsecure(),
-		grpc.WithBalancerName(roundrobin.Name),
+		grpc.WithBalancerName(roundrobin.Name), //nolint:staticcheck
 		grpc.WithBlock(),
 	)
 	cancel()

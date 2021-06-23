@@ -4,9 +4,10 @@
 fmt:
 	go fmt ./...
 
-# Run go vet against code
-vet:
-	go vet ./...
+lint:
+	golangci-lint run -v
+
+check: fmt lint
 
 run-server:
 	go run ./cmd/server --debug
@@ -18,12 +19,12 @@ IMG_SERVER := registry.cn-huhehaote.aliyuncs.com/feng-566/grpc-server:v1.0.0
 IMG_CLIENT := registry.cn-huhehaote.aliyuncs.com/feng-566/grpc-client:v1.0.0
 
 
-build-server: fmt vet
+build-server: check
 	docker build -t $(IMG_SERVER) . &&\
 	docker push $(IMG_SERVER)
 
 
-build-client: fmt vet
+build-client: check
 	docker build -f client.Dockerfile -t $(IMG_CLIENT) . &&\
 	docker push $(IMG_CLIENT)
 

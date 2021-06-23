@@ -1,6 +1,7 @@
 package db_test
 
 import (
+	"os"
 	"testing"
 
 	log "github.com/win5do/go-lib/logx"
@@ -19,7 +20,7 @@ func TestMain(m *testing.M) {
 		DSN: util.GetEnvOrDefault("DB_DSN", "root:123456@(127.0.0.1:3306)/go-demo"),
 	})
 	log.SetLogger(log.NewLogger(zapcore.DebugLevel))
-	m.Run()
+	os.Exit(m.Run())
 }
 
 func TestUlid(t *testing.T) {

@@ -30,7 +30,7 @@ func TestLock(t *testing.T) {
 			}
 
 			time.Sleep(30 * time.Second)
-			locker.UnLock()
+			_ = locker.UnLock()
 		}()
 	}
 

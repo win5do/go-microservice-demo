@@ -28,12 +28,10 @@ func ToIntOrDie(val string) int {
 	return r
 }
 
-const (
-	ctxKeyWaitGroup = "waitGroup"
-)
+type ctxKeyWaitGroup struct{}
 
 func GetWaitGroupInCtx(ctx context.Context) *sync.WaitGroup {
-	if wg, ok := ctx.Value(ctxKeyWaitGroup).(*sync.WaitGroup); ok {
+	if wg, ok := ctx.Value(ctxKeyWaitGroup{}).(*sync.WaitGroup); ok {
 		return wg
 	}
 
@@ -41,5 +39,5 @@ func GetWaitGroupInCtx(ctx context.Context) *sync.WaitGroup {
 }
 
 func NewWaitGroupCtx() (context.Context, context.CancelFunc) {
-	return context.WithCancel(context.WithValue(context.Background(), ctxKeyWaitGroup, new(sync.WaitGroup)))
+	return context.WithCancel(context.WithValue(context.Background(), ctxKeyWaitGroup{}, new(sync.WaitGroup)))
 }

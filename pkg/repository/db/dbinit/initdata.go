@@ -19,7 +19,9 @@ func InitData() error {
 		return nil
 	}
 
-	defer locker.UnLock()
+	defer func() {
+		_ = locker.UnLock()
+	}()
 
 	return run()
 }
