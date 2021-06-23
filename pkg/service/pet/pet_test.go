@@ -20,8 +20,8 @@ func mockPetSvc(petDomain petmodel.IPetDomain) *PetService {
 
 func TestGetPet(t *testing.T) {
 	ctrl := gomock.NewController(t)
-	petDomain := mock_pet.NewMockPetDomainInterface(ctrl)
-	petDb := mock_pet.NewMockPetDbInterface(ctrl)
+	petDomain := mock_pet.NewMockIPetDomain(ctrl)
+	petDb := mock_pet.NewMockIPetDb(ctrl)
 	petDomain.EXPECT().PetDb(gomock.Any()).Return(petDb)
 
 	id := "abc"

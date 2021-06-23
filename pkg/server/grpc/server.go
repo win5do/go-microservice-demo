@@ -24,10 +24,6 @@ import (
 )
 
 func Run(ctx context.Context, cfg *config.Config) {
-	wg := util.GetWaitGroupInCtx(ctx)
-	wg.Add(1)
-	defer wg.Done()
-
 	addr := net.JoinHostPort("", cfg.GrpcPort)
 
 	lis, err := net.Listen("tcp", addr)
@@ -61,5 +57,9 @@ func Run(ctx context.Context, cfg *config.Config) {
 		}
 	}()
 
+	wg := util.GetWaitGroupInCtx(ctx)
+	wg.Add(1)
+	defer wg.Done()
 	<-ctx.Done()
+	s.GracefulStop()
 }

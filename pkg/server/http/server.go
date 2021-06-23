@@ -26,9 +26,11 @@ func Run(ctx context.Context, cfg *config.Config) {
 		Handler: mux,
 	}
 
+	var startFn func()
+
 	if cfg.TlsCert != "" && cfg.TlsKey != "" {
 		// https
-		go func() {
+		startFn = func() {
 			log.Infof("https server start: %v", server.Addr)
 			cer, err := tls.LoadX509KeyPair(cfg.TlsCert, cfg.TlsKey)
 			if err != nil {
@@ -41,20 +43,22 @@ func Run(ctx context.Context, cfg *config.Config) {
 			if err := server.ListenAndServeTLS(cfg.TlsCert, cfg.TlsKey); err != nil && err != http.ErrServerClosed {
 				log.Fatalf("err: %+v", err)
 			}
-		}()
+		}
 	} else {
-		go func() {
+		// http
+		startFn = func() {
 			log.Infof("http server start: %v", server.Addr)
 			if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 				log.Fatalf("err: %+v", err)
 			}
-		}()
+		}
 	}
+
+	go startFn()
 
 	wg := util.GetWaitGroupInCtx(ctx)
 	wg.Add(1)
 	defer wg.Done()
-
 	<-ctx.Done()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
