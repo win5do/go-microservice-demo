@@ -5,9 +5,9 @@ import (
 
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
-	"github.com/jinzhu/gorm"
 	errors2 "github.com/pkg/errors"
 	"github.com/prometheus/common/log"
+	"gorm.io/gorm"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

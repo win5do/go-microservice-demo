@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	errors2 "github.com/pkg/errors"
+	"gorm.io/gorm"
 
 	log "github.com/win5do/go-lib/logx"
 
