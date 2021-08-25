@@ -3,10 +3,9 @@ package pet
 import (
 	"time"
 
-	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	errors2 "github.com/pkg/errors"
-	"github.com/prometheus/common/log"
+	"google.golang.org/protobuf/types/known/timestamppb"
 	"gorm.io/gorm"
 
 	"google.golang.org/grpc/codes"
@@ -32,13 +31,7 @@ func pberr(err error) error {
 }
 
 func time2Pb(in time.Time) *timestamp.Timestamp {
-	r, err := ptypes.TimestampProto(in)
-	if err != nil {
-		log.Errorf("err: %+v", err)
-		return nil
-	}
-
-	return r
+	return timestamppb.New(in)
 }
 
 func pb2Time(in *timestamp.Timestamp) time.Time {
@@ -46,11 +39,5 @@ func pb2Time(in *timestamp.Timestamp) time.Time {
 		return time.Time{}
 	}
 
-	r, err := ptypes.Timestamp(in)
-	if err != nil {
-		log.Errorf("err: %+v", err)
-		return time.Time{}
-	}
-
-	return r
+	return in.AsTime()
 }
